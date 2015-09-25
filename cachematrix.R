@@ -1,34 +1,39 @@
-## Put comments here that give an overall description of what your
-## functions do
+## makeCache returns a list of functions that 
+## save or draw the input matrix and its inverse (cache)
+## list$set() saves a new matrix to input variable
+## list$get() returns the input matrix
+## list$setInverse() saves the inverse to cache
+## list$getInverse() returns the inverse from cache
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-  m <- NULL
+makeCache <- function(x = matrix()) {
+  invMat <- NULL
   set <- function(y) {
     x <<- y
-    m <<- NULL
+    invMat <<- NULL
   }
   get <- function() x
-  setinverse <- function(solve) m <<- solve
-  getinverse <- function() m
+  setInverse <- function(Inverse) invMat <<- Inverse
+  getInverse <- function() invMat
   list(set = set, get = get,
-       setinverse = setinverse,
-       getinverse = getinverse)
+       setInverse = setInverse,
+       getInverse = getInverse)
 }
 
 
-## Write a short comment describing this function
+## cacheInverse returns the inverse matrix of 'x' through the saved cache
+## Input the list obtained from the above function
 
-cacheSolve <- function(x) {
-        ## Return a matrix that is the inverse of 'x'
-  m <- x$getinverse()
-  if(!is.null(m)) {
+cacheInverse <- function(xlist) {
+  # check the cache to return
+  invMat <- xlist$getInverse()
+  if(!is.null(invMat)) {
     message("getting cached data")
-    return(m)
+    return(invMat)
   }
-  data <- x$get()
-  m <- solve(data)
-  x$setinverse(m)
-  m
+  # if the cache is empty, calculate the inverse, 
+  # save to the cache, and then return
+  data <- xlist$get()
+  invMat <- solve(data)
+  xlist$setInverse(invMat)
+  invMat
 }
