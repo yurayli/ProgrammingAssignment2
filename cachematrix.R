@@ -1,11 +1,10 @@
-## makeCache returns a list of functions that 
+makeCache <- function(x = matrix()) {
+## MAKECACHE() returns a list of functions that 
 ## save or draw the input matrix and its inverse (cache)
 ## list$set() saves a new matrix to input variable
 ## list$get() returns the input matrix
 ## list$setInverse() saves the inverse to cache
 ## list$getInverse() returns the inverse from cache
-
-makeCache <- function(x = matrix()) {
   invMat <- NULL
   set <- function(y) {
     x <<- y
@@ -20,10 +19,9 @@ makeCache <- function(x = matrix()) {
 }
 
 
-## cacheInverse returns the inverse matrix of 'x' through the saved cache
-## Input the list obtained from the above function
-
 cacheInverse <- function(xlist) {
+## CACHEINVERSE() returns the inverse matrix of 'x' through the saved cache
+## Input the list obtained from the above function
   # check the cache to return
   invMat <- xlist$getInverse()
   if(!is.null(invMat)) {
